@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
 
 declare global {
   interface Window {
@@ -8,10 +8,10 @@ declare global {
 }
 
 export function useGSAP() {
-  const isLoaded = useRef(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    if (isLoaded.current) return;
+    if (isLoaded) return;
 
     const loadGSAP = async () => {
       if (!window.gsap) {
@@ -38,16 +38,16 @@ export function useGSAP() {
 
       if (window.gsap && window.ScrollTrigger) {
         window.gsap.registerPlugin(window.ScrollTrigger);
-        isLoaded.current = true;
+        setIsLoaded(true);
       }
     };
 
     loadGSAP();
-  }, []);
+  }, [isLoaded]);
 
   return {
     gsap: window.gsap,
     ScrollTrigger: window.ScrollTrigger,
-    isLoaded: isLoaded.current
+    isLoaded
   };
 }

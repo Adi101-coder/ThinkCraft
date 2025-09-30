@@ -28,7 +28,12 @@ export default function CompanyInfo() {
   const { gsap, ScrollTrigger, isLoaded } = useGSAP();
 
   useEffect(() => {
-    if (!isLoaded || !gsap || !ScrollTrigger || !sectionRef.current) return;
+    if (!isLoaded || !gsap || !ScrollTrigger || !sectionRef.current) {
+      console.log('CompanyInfo: Waiting for GSAP', { isLoaded, hasGsap: !!gsap, hasScrollTrigger: !!ScrollTrigger });
+      return;
+    }
+
+    console.log('CompanyInfo: Setting up animations');
 
     // Color transition back to white
     const colorTransition = ScrollTrigger.create({
@@ -45,34 +50,48 @@ export default function CompanyInfo() {
     });
 
     // Counter animations
+    const triggers: any[] = [];
     countersRef.current.forEach((counter, index) => {
       if (!counter) return;
       
       const target = stats[index].number;
+      const counterObj = { value: 0 };
       
-      ScrollTrigger.create({
+      const animateCounter = () => {
+        console.log(`CompanyInfo: Animating counter ${index} to ${target}`);
+        gsap.to(counterObj, {
+          value: target,
+          duration: 2,
+          ease: "power2.out",
+          onUpdate: () => {
+            const current = Math.ceil(counterObj.value);
+            counter.textContent = current + '+';
+          }
+        });
+      };
+      
+      const trigger = ScrollTrigger.create({
         trigger: counter,
         start: "top 80%",
-        onEnter: () => {
-          gsap.fromTo(counter, 
-            { textContent: 0 },
-            { 
-              textContent: target,
-              duration: 2,
-              ease: "power2.out",
-              snap: { textContent: 1 },
-              onUpdate: function() {
-                const current = Math.ceil(this.targets()[0].textContent);
-                counter.textContent = current + '+';
-              }
-            }
-          );
-        }
+        once: true,
+        onEnter: animateCounter
       });
+      
+      triggers.push(trigger);
+      
+      // Check if already in view and trigger immediately
+      setTimeout(() => {
+        if (trigger.isActive) {
+          console.log(`CompanyInfo: Counter ${index} already in view, triggering`);
+          animateCounter();
+        }
+      }, 100);
     });
 
     return () => {
+      console.log('CompanyInfo: Cleaning up animations');
       colorTransition?.kill();
+      triggers.forEach((trigger: any) => trigger?.kill());
       ScrollTrigger.getAll().forEach((trigger: any) => {
         if (trigger.trigger && sectionRef.current?.contains(trigger.trigger as Node)) {
           trigger.kill();
