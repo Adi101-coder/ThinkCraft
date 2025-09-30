@@ -1,0 +1,48 @@
+import { useState } from 'react';
+import Preloader from '@/components/preloader';
+import Navigation from '@/components/navigation';
+import HeroSection from '@/components/hero-section';
+import WorkShowcase from '@/components/work-showcase';
+import TextReveal from '@/components/text-reveal';
+import StaggeredAnimation from '@/components/staggered-animation';
+import CompanyInfo from '@/components/company-info';
+import Footer from '@/components/footer';
+import ScrollProgress from '@/components/scroll-progress';
+
+export default function Home() {
+  const [preloaderComplete, setPreloaderComplete] = useState(false);
+
+  const handlePreloaderComplete = () => {
+    setPreloaderComplete(true);
+  };
+
+  return (
+    <div className="min-h-screen bg-background text-foreground" data-testid="home-page">
+      <ScrollProgress />
+      
+      {!preloaderComplete && (
+        <Preloader onComplete={handlePreloaderComplete} />
+      )}
+      
+      {preloaderComplete && (
+        <>
+          <Navigation />
+          <HeroSection />
+          
+          {/* Color Transition Section 1 */}
+          <div id="color-transition-1" className="h-96 bg-transition" data-testid="color-transition-1" />
+          
+          <WorkShowcase />
+          <TextReveal />
+          <StaggeredAnimation />
+          
+          {/* Color Transition Section 2 */}
+          <div id="color-transition-2" className="h-96 bg-transition" data-testid="color-transition-2" />
+          
+          <CompanyInfo />
+          <Footer />
+        </>
+      )}
+    </div>
+  );
+}
