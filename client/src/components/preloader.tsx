@@ -50,10 +50,15 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       ease: "power2.inOut"
     });
 
-    // Hide preloader
+    // Add a pause before transition
+    tl.to({}, { duration: 0.5 });
+
+    // Slide preloader up and fade out
     tl.to(preloaderRef.current, {
+      y: '-100%',
       opacity: 0,
-      duration: 0.5,
+      duration: 1,
+      ease: "power2.inOut",
       onComplete: completePreloader
     });
 

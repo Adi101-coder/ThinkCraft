@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Preloader from '@/components/preloader';
 import Navigation from '@/components/navigation';
 import HeroSection from '@/components/hero-section';
+import StickyVideoSection from '@/components/sticky-video-section';
 import WorkShowcase from '@/components/work-showcase';
 import TextReveal from '@/components/text-reveal';
 import StaggeredAnimation from '@/components/staggered-animation';
@@ -16,6 +17,8 @@ export default function Home() {
     setPreloaderComplete(true);
   };
 
+
+
   return (
     <div className="min-h-screen bg-background text-foreground" data-testid="home-page">
       <ScrollProgress />
@@ -25,12 +28,11 @@ export default function Home() {
       )}
       
       {preloaderComplete && (
-        <>
+        <div className="main-content-enter">
           <Navigation />
           <HeroSection />
           
-          {/* Color Transition Section 1 */}
-          <div id="color-transition-1" className="h-96 bg-transition" data-testid="color-transition-1" />
+          <StickyVideoSection src="/video.mp4" />
           
           <WorkShowcase />
           <TextReveal />
@@ -41,7 +43,7 @@ export default function Home() {
           
           <CompanyInfo />
           <Footer />
-        </>
+        </div>
       )}
     </div>
   );

@@ -69,12 +69,17 @@ export default function StaggeredAnimation() {
       className="h-screen bg-primary text-primary-foreground relative overflow-hidden flex items-center justify-center"
       data-testid="staggered-animation"
     >
-      <div className="absolute inset-0">
+      <div className="relative w-full h-full flex items-center justify-center">
         {words.map((word, index) => (
           <div
             key={index}
             ref={el => { if (el) wordsRef.current[index] = el; }}
-            className="parallax-word absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+            className="parallax-word absolute"
+            style={{
+              top: `${40 + (index * 8)}%`,
+              left: word.direction === 'left' ? '20%' : '60%',
+              transform: 'translate(-50%, -50%)'
+            }}
             data-word={word.text}
             data-direction={word.direction}
             data-testid={`parallax-word-${index}`}
