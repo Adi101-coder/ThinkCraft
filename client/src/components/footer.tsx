@@ -1,15 +1,13 @@
-import { useEffect } from 'react';
-import { useGSAP } from '@/hooks/use-gsap';
+import { useState } from 'react';
 
 export default function Footer() {
-  const { gsap, isLoaded } = useGSAP();
+  const [email, setEmail] = useState('');
 
-  const scrollToTop = () => {
-    if (gsap) {
-      gsap.to(window, { scrollTo: 0, duration: 1.5, ease: "power2.inOut" });
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Handle newsletter signup
+    console.log('Newsletter signup:', email);
+    setEmail('');
   };
 
   const scrollToSection = (sectionId: string) => {
@@ -19,132 +17,145 @@ export default function Footer() {
     }
   };
 
-  useEffect(() => {
-    if (!isLoaded || !gsap) return;
-
-    const backToTopBtn = document.getElementById('back-to-top');
-    if (!backToTopBtn) return;
-
-    const handleScroll = () => {
-      if (window.scrollY > 500) {
-        gsap.to(backToTopBtn, { opacity: 1, duration: 0.3 });
-      } else {
-        gsap.to(backToTopBtn, { opacity: 0, duration: 0.3 });
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [isLoaded, gsap]);
-
   return (
-    <>
-      <footer id="footer" className="bg-muted text-foreground py-16" data-testid="footer">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
-            {/* Quick Links */}
-            <div data-testid="footer-links">
-              <h3 className="text-xl font-semibold mb-6">Quick Links</h3>
-              <div className="space-y-3">
-                <button 
-                  onClick={() => scrollToSection('hero')}
-                  className="block text-muted-foreground hover:text-primary transition-colors text-left"
-                  data-testid="footer-home"
-                >
-                  Home
-                </button>
-                <button 
-                  onClick={() => scrollToSection('work-showcase')}
-                  className="block text-muted-foreground hover:text-primary transition-colors text-left"
-                  data-testid="footer-shop"
-                >
-                  Shop
-                </button>
-                <button 
-                  onClick={() => scrollToSection('work-showcase')}
-                  className="block text-muted-foreground hover:text-primary transition-colors text-left"
-                  data-testid="footer-work"
-                >
-                  Work
-                </button>
-                <button 
-                  onClick={() => scrollToSection('company-info')}
-                  className="block text-muted-foreground hover:text-primary transition-colors text-left"
-                  data-testid="footer-about"
-                >
-                  About
-                </button>
-              </div>
-            </div>
-            
-            {/* Services */}
-            <div data-testid="footer-services">
-              <h3 className="text-xl font-semibold mb-6">Services</h3>
-              <div className="space-y-3">
-                <a href="#" className="block text-muted-foreground hover:text-primary transition-colors" data-testid="service-3d-printing">
-                  3D Printing
-                </a>
-                <a href="#" className="block text-muted-foreground hover:text-primary transition-colors" data-testid="service-consulting">
-                  Design Consulting
-                </a>
-                <a href="#" className="block text-muted-foreground hover:text-primary transition-colors" data-testid="service-prototyping">
-                  Prototyping
-                </a>
-                <a href="#" className="block text-muted-foreground hover:text-primary transition-colors" data-testid="service-custom">
-                  Custom Solutions
-                </a>
-              </div>
-            </div>
-            
-            {/* Connect */}
-            <div data-testid="footer-connect">
-              <h3 className="text-xl font-semibold mb-6">Connect</h3>
-              <div className="space-y-3">
-                <p className="text-muted-foreground" data-testid="contact-email">
-                  <i className="fas fa-envelope text-primary mr-2"></i>
-                  connect@thinkcraftlab.com
-                </p>
-                <p className="text-muted-foreground" data-testid="contact-phone">
-                  <i className="fas fa-phone text-primary mr-2"></i>
-                  +91 9889804044
-                </p>
-                <p className="text-muted-foreground" data-testid="contact-location">
-                  <i className="fas fa-map-marker-alt text-primary mr-2"></i>
-                  Bareilly, UP
-                </p>
-                <div className="flex space-x-4 mt-6" data-testid="social-links">
-                  <a href="#" className="text-primary hover:text-primary/80 transition-colors text-xl" data-testid="social-linkedin">
-                    <i className="fab fa-linkedin"></i>
-                  </a>
-                  <a href="#" className="text-primary hover:text-primary/80 transition-colors text-xl" data-testid="social-instagram">
-                    <i className="fab fa-instagram"></i>
-                  </a>
-                  <a href="#" className="text-primary hover:text-primary/80 transition-colors text-xl" data-testid="social-twitter">
-                    <i className="fab fa-twitter"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          {/* Bottom Bar */}
-          <div className="border-t border-border pt-8 text-center">
-            <p className="text-muted-foreground" data-testid="copyright">
-              © 2025 ThinkCraft Lab. All rights reserved.
+    <footer id="footer" className="bg-black text-white py-16" data-testid="footer">
+      <div className="max-w-7xl mx-auto px-8">
+        {/* Large Company Name */}
+        <div className="mb-12">
+          <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tight leading-none">
+            THINKCRAFT
+          </h1>
+          <div className="flex items-center justify-between mt-4">
+            <p className="text-gray-400 text-sm max-w-md">
+              Sign up for our design updates, 3D printing insights, and innovation newsletters.
+            </p>
+            <p className="text-gray-500 text-xs hidden md:block">
+              "Innovation through precision" — ThinkCraft Lab
             </p>
           </div>
         </div>
-      </footer>
 
-      {/* Back to Top Button */}
-      <button 
-        id="back-to-top"
-        onClick={scrollToTop}
-        className="fixed bottom-8 right-8 w-12 h-12 bg-primary text-primary-foreground rounded-full shadow-lg opacity-0 transition-all duration-300 hover:scale-110 z-40"
-        data-testid="back-to-top"
-      >
-        <i className="fas fa-chevron-up"></i>
-      </button>
-    </>
+        {/* Newsletter Signup */}
+        <div className="mb-16">
+          <form onSubmit={handleSubmit} className="flex items-center border-b border-gray-700 pb-2 max-w-md">
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="email address"
+              className="bg-transparent text-white placeholder-gray-500 flex-1 outline-none text-lg"
+              required
+            />
+            <button
+              type="submit"
+              className="text-gray-400 hover:text-white transition-colors ml-4 text-lg"
+            >
+              Submit
+            </button>
+          </form>
+        </div>
+
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
+          {/* Locations */}
+          <div>
+            <h3 className="text-white font-medium mb-4">Bareilly</h3>
+            <div className="text-gray-400 text-sm space-y-1">
+              <p>Civil Lines Area</p>
+              <p>Bareilly, UP 243001</p>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-white font-medium mb-4">Delhi</h3>
+            <div className="text-gray-400 text-sm space-y-1">
+              <p>Connaught Place</p>
+              <p>New Delhi, DL 110001</p>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-white font-medium mb-4">Mumbai</h3>
+            <div className="text-gray-400 text-sm space-y-1">
+              <p>Bandra West</p>
+              <p>Mumbai, MH 400050</p>
+            </div>
+          </div>
+
+          {/* Navigation Links */}
+          <div>
+            <h3 className="text-white font-medium mb-4">ThinkCraft</h3>
+            <div className="space-y-2">
+              <button 
+                onClick={() => scrollToSection('hero')}
+                className="block text-gray-400 hover:text-white transition-colors text-sm text-left"
+              >
+                Work
+              </button>
+              <button 
+                onClick={() => scrollToSection('text-reveal')}
+                className="block text-gray-400 hover:text-white transition-colors text-sm text-left"
+              >
+                About
+              </button>
+              <button 
+                onClick={() => scrollToSection('three-steps-process')}
+                className="block text-gray-400 hover:text-white transition-colors text-sm text-left"
+              >
+                Services
+              </button>
+              <a href="#" className="block text-gray-400 hover:text-white transition-colors text-sm">
+                Catalog
+              </a>
+              <a href="#" className="block text-gray-400 hover:text-white transition-colors text-sm">
+                Contact
+              </a>
+              <a href="#" className="block text-gray-400 hover:text-white transition-colors text-sm">
+                Careers
+              </a>
+            </div>
+          </div>
+
+          {/* Social Links */}
+          <div>
+            <h3 className="text-white font-medium mb-4">Socials</h3>
+            <div className="space-y-2">
+              <a href="#" className="block text-gray-400 hover:text-white transition-colors text-sm">
+                Instagram
+              </a>
+              <a href="#" className="block text-gray-400 hover:text-white transition-colors text-sm">
+                LinkedIn
+              </a>
+              <a href="#" className="block text-gray-400 hover:text-white transition-colors text-sm">
+                Behance
+              </a>
+              <a href="#" className="block text-gray-400 hover:text-white transition-colors text-sm">
+                YouTube
+              </a>
+              <a href="#" className="block text-gray-400 hover:text-white transition-colors text-sm">
+                Twitter
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Links */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-xs text-gray-500 space-y-4 md:space-y-0">
+          <div className="flex space-x-6">
+            <a href="#" className="hover:text-gray-300 transition-colors">
+              https://www.thinkcraftlab.com
+            </a>
+          </div>
+          <div className="flex space-x-6">
+            <a href="#" className="hover:text-gray-300 transition-colors">
+              Privacy Policy
+            </a>
+            <a href="#" className="hover:text-gray-300 transition-colors">
+              Terms
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
   );
 }

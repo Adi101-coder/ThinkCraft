@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import ShowcaseGallery from '@/components/showcase-gallery';
-import ChallengesSection from '@/components/challenges-section';
 
 /**
  * UnifiedThemeMorph Component

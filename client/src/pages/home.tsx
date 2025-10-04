@@ -6,10 +6,12 @@ import StickyVideoSection from '@/components/sticky-video-section';
 import UnifiedThemeMorph from '@/components/unified-theme-morph';
 
 
-import WorkShowcase from '@/components/work-showcase';
+
 import TextReveal from '@/components/text-reveal';
-import StaggeredAnimation from '@/components/staggered-animation';
-import CompanyInfo from '@/components/company-info';
+import TextToIndustryTransition from '@/components/text-to-industry-transition';
+import AnimatedMarquee from '@/components/animated-marquee';
+
+
 import Footer from '@/components/footer';
 import ScrollProgress from '@/components/scroll-progress';
 import ScrollIndicator from '@/components/scroll-indicator';
@@ -41,10 +43,9 @@ export default function Home() {
           
           <UnifiedThemeMorph />
           
-          <WorkShowcase />
           <TextReveal />
-          <StaggeredAnimation />
-          <CompanyInfo />
+          <TextToIndustryTransition />
+          <AnimatedMarquee />
           <Footer />
         </div>
       )}
