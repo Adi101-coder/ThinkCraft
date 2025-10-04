@@ -72,6 +72,29 @@
     @apply font-sans antialiased bg-background text-foreground;
     overflow-x: hidden;
   }
+
+  /* Hide scrollbar for all browsers */
+  html {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+  }
+
+  html::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none; /* Chrome, Safari, Opera */
+  }
+
+  body {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+  }
+
+  body::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none; /* Chrome, Safari, Opera */
+  }
 }
 
 @layer components {
@@ -228,5 +251,89 @@
       opacity: 1;
       transform: translateY(0);
     }
+  }
+
+  /* Perfect theme transition system - Ultra smooth */
+  :root {
+    --theme-progress: 0;
+    --bg-color: rgb(255, 255, 255);
+    --text-color: rgb(0, 0, 0);
+    --transition-progress: 0%;
+    
+    /* Theme morph variables for unified sections */
+    --theme-bg: rgb(249, 250, 251);
+    --theme-text: rgb(31, 41, 55);
+    --theme-accent: rgb(107, 114, 128);
+  }
+
+  /* Buttery smooth transitions for perfect color blending */
+  body {
+    transition: background-color 0.03s linear, color 0.03s linear;
+    will-change: background-color, color;
+  }
+
+  /* Smooth text color transitions for all text elements */
+  h1, h2, h3, h4, h5, h6, p, span, div, a, button {
+    transition: color 0.03s linear;
+  }
+
+  /* Navigation color adaptation */
+  .navigation, nav {
+    transition: background-color 0.03s linear, color 0.03s linear;
+  }
+
+  /* Theme-aware components with perfect sync */
+  .theme-adaptive {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.03s linear, color 0.03s linear;
+  }
+
+  /* Showcase gallery smooth adaptation */
+  .showcase-gallery {
+    transition: background-color 0.03s linear;
+  }
+
+  /* Unified theme morph classes */
+  .theme-morph-container {
+    background-color: var(--theme-bg);
+    color: var(--theme-text);
+    transition: background-color 0.7s ease-in-out, color 0.7s ease-in-out;
+  }
+
+  .theme-morph-text {
+    color: var(--theme-text);
+    transition: color 0.7s ease-in-out;
+  }
+
+  .theme-morph-accent {
+    color: var(--theme-accent);
+    transition: color 0.7s ease-in-out;
+  }
+
+  /* Ensure ultra-smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* GPU acceleration for color transitions */
+  body, .navigation, .theme-adaptive {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  /* Restore native scrolling */
+  html, body {
+    overflow-x: hidden; /* Keep horizontal overflow hidden */
+    overflow-y: auto;   /* Allow vertical scrolling */
+    height: auto;       /* Allow natural height */
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Optimize scrolling performance */
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }

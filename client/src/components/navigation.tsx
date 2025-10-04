@@ -13,7 +13,7 @@ export default function Navigation() {
   return (
     <nav 
       ref={navRef}
-      className="nav-floating fixed top-4 left-4 right-4 z-50 rounded-full px-6 py-3"
+      className="nav-floating absolute top-4 left-4 right-4 z-50 rounded-full px-6 py-3"
       data-testid="floating-nav"
     >
       <div className="flex items-center justify-between max-w-7xl mx-auto">

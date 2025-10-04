@@ -54,27 +54,27 @@ export default function StickyVideoSection({ src }: StickyVideoSectionProps) {
 
     /**
      * Update video scaling and positioning based on scroll progress
-     * Interpolates between initial centered state and final top-right sticky position
+     * Interpolates between initial large centered state and final smaller top-right sticky position
      */
     const updateVideoTransform = (progress: number) => {
       if (!videoRef.current) return;
       
-      // Scale: 1.0 → 0.4 (60% reduction)
-      const scale = 1 - (progress * 0.6);
+      // Scale: 1.0 → 0.45 (55% reduction for better final size)
+      const scale = 1 - (progress * 0.55);
       
       // Position: center → top-right corner
       // On mobile: stays centered horizontally
       const isMobile = window.innerWidth < 768;
-      const translateX = isMobile ? 0 : progress * 40; // Move right on desktop
-      const translateY = progress * -30; // Move up
+      const translateX = isMobile ? 0 : progress * 35; // Move right on desktop
+      const translateY = progress * -25; // Move up
       
       videoRef.current.style.transform = `
-        scale(${Math.max(scale, 0.4)}) 
+        scale(${Math.max(scale, 0.45)}) 
         translate(${translateX}%, ${translateY}%)
       `;
       
       // Increase border radius as video shrinks
-      const borderRadius = 24 + (progress * 16);
+      const borderRadius = 16 + (progress * 20);
       videoRef.current.style.borderRadius = `${borderRadius}px`;
     };
 
@@ -119,19 +119,19 @@ export default function StickyVideoSection({ src }: StickyVideoSectionProps) {
   return (
     <div 
       ref={sectionRef}
-      className="relative min-h-[200vh] bg-background"
+      className="relative min-h-[120vh] bg-background"
     >
       {/* Sticky container for video and text */}
       <div className="sticky top-0 h-screen overflow-hidden">
         
         {/* Video container - responsive positioning */}
-        <div className="absolute inset-0 flex items-center justify-center md:justify-end md:items-start md:pt-20 md:pr-20">
+        <div className="absolute inset-0 flex items-center justify-center">
           <video
             ref={videoRef}
-            className="w-full max-w-4xl h-[70vh] object-cover shadow-2xl transition-all duration-100 ease-out"
+            className="w-full max-w-6xl h-[85vh] object-cover shadow-2xl transition-all duration-100 ease-out"
             style={{
               transformOrigin: 'center center',
-              borderRadius: '24px'
+              borderRadius: '16px'
             }}
             autoPlay
             loop
@@ -146,7 +146,7 @@ export default function StickyVideoSection({ src }: StickyVideoSectionProps) {
         {/* Left text block - responsive positioning */}
         <div 
           ref={leftTextRef}
-          className="absolute left-4 md:left-8 top-1/2 md:top-1/3 transform -translate-y-1/2 md:-translate-y-0 z-10 max-w-xs opacity-0"
+          className="absolute left-4 md:left-8 top-2/3 md:top-1/2 transform -translate-y-1/2 md:-translate-y-0 z-10 max-w-xs opacity-0"
           style={{ transition: 'opacity 0.3s ease-out, transform 0.3s ease-out' }}
         >
           <div className="bg-background/90 backdrop-blur-sm p-6 rounded-2xl border border-border/20">
@@ -162,7 +162,7 @@ export default function StickyVideoSection({ src }: StickyVideoSectionProps) {
         {/* Right text block - responsive positioning */}
         <div 
           ref={rightTextRef}
-          className="absolute right-4 md:right-8 bottom-1/3 md:bottom-1/4 z-10 max-w-xs opacity-0"
+          className="absolute right-4 md:right-8 bottom-16 md:bottom-12 z-10 max-w-xs opacity-0"
           style={{ transition: 'opacity 0.3s ease-out, transform 0.3s ease-out' }}
         >
           <div className="bg-background/90 backdrop-blur-sm p-6 rounded-2xl border border-border/20">
