@@ -464,15 +464,12 @@
 
 .hover\:text-orange-600:hover {
   color: #FF5D05;
-}/* Enhance
-d Three Steps Process Component Styles */
+}
+
+/* Enhanced Three Steps Process Component Styles */
 .step-card {
   will-change: transform, opacity, filter;
   transform-origin: center center;
-  transform-style: preserve-3d;
-  per/* 
-Enhanced Three Steps Process Styles */
-.step-card {
   transform-style: preserve-3d;
   perspective: 1000px;
   backface-visibility: hidden;
