@@ -29,20 +29,20 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground" data-testid="home-page">
       <ScrollProgress />
-      
+
       {!preloaderComplete && (
         <Preloader onComplete={handlePreloaderComplete} />
       )}
-      
+
       {preloaderComplete && (
         <div className="main-content-enter">
           <Navigation />
           <HeroSection />
-          
+
           <StickyVideoSection src="/video.mp4" />
-          
+
           <UnifiedThemeMorph />
-          
+
           <TextReveal />
           <TextToIndustryTransition />
           <AnimatedMarquee />

@@ -29,7 +29,7 @@ const industries = [
       <svg viewBox="0 0 24 24" fill="none" className="w-8 h-8">
         <path
           d="M12 3L2 12H5V20H19V12H22L12 3Z"
-          fill="#FF6B00"
+          fill="#FF5D05"
         />
         <path
           d="M8 21V15H16V21H8Z"
@@ -41,7 +41,7 @@ const industries = [
           strokeWidth="2"
           fill="none"
         />
-        <circle cx="7" cy="7" r="1" fill="#FF6B00" />
+        <circle cx="7" cy="7" r="1" fill="#FF5D05" />
         <circle cx="17" cy="7" r="1" fill="#00C853" />
       </svg>
     ),
@@ -50,7 +50,7 @@ const industries = [
   {
     id: 'education',
     label: 'EDUCATION',
-    color: '#FF6B00',
+    color: '#FF5D05',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" className="w-8 h-8">
         <path
@@ -86,25 +86,25 @@ export default function TextToIndustryTransition() {
     offset: ["start end", "end start"]
   });
 
-  // Transform scroll progress to theme values - smooth transition from orange to white
+  // Transform scroll progress to theme values - ultra fast transition from orange to white
   const backgroundColor = useTransform(
     scrollYProgress,
-    [0, 0.3, 0.7, 1],
+    [0, 0.05, 0.15, 1],
     [
       '#FF5D05',        // Orange start (TextReveal color)
-      '#FF5D05',        // Hold orange until 30%
-      '#FFFFFF',        // Transition to white at 70%
+      '#FF5D05',        // Hold orange until 5% (ultra fast)
+      '#FFFFFF',        // Transition to white at 15% (ultra fast)
       '#FFFFFF'         // White locked for IndustrySelection
     ]
   );
 
   const textColor = useTransform(
     scrollYProgress,
-    [0, 0.3, 0.7, 1],
+    [0, 0.05, 0.15, 1],
     [
       'rgb(255, 255, 255)',  // White text start
-      'rgb(255, 255, 255)',  // Hold white until 30%
-      'rgb(31, 41, 55)',     // Transition to dark at 70%
+      'rgb(255, 255, 255)',  // Hold white until 5% (ultra fast)
+      'rgb(31, 41, 55)',     // Transition to dark at 15% (ultra fast)
       'rgb(31, 41, 55)'      // Dark locked for IndustrySelection
     ]
   );

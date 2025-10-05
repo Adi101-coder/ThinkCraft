@@ -28,7 +28,7 @@ const industries = [
       <svg viewBox="0 0 24 24" fill="none" className="w-8 h-8">
         <path
           d="M12 3L2 12H5V20H19V12H22L12 3Z"
-          fill="#FF6B00"
+          fill="#FF5D05"
         />
         <path
           d="M8 21V15H16V21H8Z"
@@ -40,7 +40,7 @@ const industries = [
           strokeWidth="2"
           fill="none"
         />
-        <circle cx="7" cy="7" r="1" fill="#FF6B00" />
+        <circle cx="7" cy="7" r="1" fill="#FF5D05" />
         <circle cx="17" cy="7" r="1" fill="#00C853" />
       </svg>
     ),
@@ -49,7 +49,7 @@ const industries = [
   {
     id: 'education',
     label: 'EDUCATION',
-    color: '#FF6B00',
+    color: '#FF5D05',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" className="w-8 h-8">
         <path

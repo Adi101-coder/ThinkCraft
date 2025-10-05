@@ -8,10 +8,10 @@
     <rect x="5" y="15" width="70" height="8" fill="#A8C5E0" rx="4"/>
     
     <!-- Print bed/platform -->
-    <rect x="15" y="35" width="50" height="6" fill="#FFB366" rx="3"/>
+    <rect x="15" y="35" width="50" height="6" fill="#FF5D05" rx="3"/>
     
     <!-- Extruder/tool head -->
-    <ellipse cx="40" cy="25" rx="8" ry="6" fill="#FF6600"/>
+    <ellipse cx="40" cy="25" rx="8" ry="6" fill="#FF5D05"/>
     <circle cx="40" cy="25" r="3" fill="#4A9EFF"/>
     
     <!-- Support elements -->
@@ -19,7 +19,7 @@
   </g>
   
   <!-- "Think" text -->
-  <text x="110" y="45" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#FF6600">Think</text>
+  <text x="110" y="45" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#FF5D05">Think</text>
   
   <!-- "Craft Lab" text -->
   <text x="110" y="85" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#4A9EFF">Craft Lab</text>

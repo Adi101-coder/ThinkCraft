@@ -435,8 +435,8 @@
 }
 
 .number-badge {
-  background: linear-gradient(135deg, #FF6B00 0%, #FF5D05 100%);
-  box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3);
+  background: linear-gradient(135deg, #FF5D05 0%, #FF5D05 100%);
+  box-shadow: 0 4px 15px rgba(255, 93, 5, 0.3);
 }
 
 .step-icon {
@@ -455,11 +455,11 @@
 
 /* Enhanced orange color for links and icons */
 .text-orange-500 {
-  color: #FF6B00;
+  color: #FF5D05;
 }
 
 .bg-orange-500 {
-  background-color: #FF6B00;
+  background-color: #FF5D05;
 }
 
 .hover\:text-orange-600:hover {
@@ -542,4 +542,55 @@ Animated Marquee Component */
 .marquee-content span {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+}/* Mar
+quee Animations */
+@keyframes marqueeScroll {
+  0% {
+    transform: translateX(100vw);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes angledMarqueeScroll {
+  0% {
+    transform: rotate(45deg) translateX(-100vw);
+  }
+  100% {
+    transform: rotate(45deg) translateX(100vw);
+  }
+}
+
+.marquee-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.marquee-content {
+  display: flex;
+  align-items: center;
+}
+
+.angled-marquee-container {
+  overflow: hidden;
+  z-index: 1;
+}
+
+.angled-marquee-content {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 0;
+}/* Prevent
+ word breaking in text reveal */
+.text-reveal-paragraph {
+  word-break: keep-all;
+  hyphens: none;
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }

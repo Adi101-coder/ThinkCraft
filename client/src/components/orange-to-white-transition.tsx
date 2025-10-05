@@ -13,26 +13,26 @@ export default function OrangeToWhiteTransition() {
     offset: ["start end", "end start"]
   });
 
-  // Respectful transition - waits for TextReveal to finish scrolling off
+  // Ultra fast transition - instant color change
   const backgroundColor = useTransform(
     scrollYProgress,
-    [0, 0.4, 0.7, 1],
+    [0, 0.1, 0.2, 1],
     [
-      '#FF5D05',           // Orange start - hold until TextReveal exits
-      '#FF5D05',           // Keep orange while TextReveal is still visible
-      '#ffffff',           // Start white transition after TextReveal exits
-      '#ffffff'            // White locked for ThreeStepsProcess
+      '#FF5D05',           // Orange start
+      '#FF5D05',           // Hold orange very briefly (10%)
+      '#ffffff',           // Ultra quick transition to white (20%)
+      '#ffffff'            // White locked
     ]
   );
 
   const textColor = useTransform(
     scrollYProgress,
-    [0, 0.4, 0.7, 1],
+    [0, 0.1, 0.2, 1],
     [
       'rgb(255, 255, 255)', // White text start
-      'rgb(255, 255, 255)', // Hold white while TextReveal is visible
-      'rgb(31, 41, 55)',    // Start dark transition after TextReveal exits
-      'rgb(31, 41, 55)'     // Dark locked for white section
+      'rgb(255, 255, 255)', // Hold white very briefly (10%)
+      'rgb(31, 41, 55)',    // Ultra quick transition to dark (20%)
+      'rgb(31, 41, 55)'     // Dark locked
     ]
   );
 
@@ -64,7 +64,7 @@ export default function OrangeToWhiteTransition() {
       <div className="max-w-7xl mx-auto px-4 w-full">
         <div className="text-center">
           {/* Main words display - visible from start, follows color transition */}
-          <motion.div 
+          <motion.div
             className="space-y-4"
             style={{
               opacity: 1
@@ -78,11 +78,11 @@ export default function OrangeToWhiteTransition() {
                   // Color follows the exact same transition as textColor
                   color: useTransform(
                     scrollYProgress,
-                    [0, 0.4, 0.7, 1],
+                    [0, 0.1, 0.2, 1],
                     [
                       'rgb(255, 255, 255)', // White on orange background
-                      'rgb(255, 255, 255)', // Stay white until transition starts
-                      'rgb(31, 41, 55)',    // Transition to black with background
+                      'rgb(255, 255, 255)', // Stay white very briefly
+                      'rgb(31, 41, 55)',    // Ultra quick transition to black
                       'rgb(31, 41, 55)'     // Stay black on white background
                     ]
                   ),
@@ -105,7 +105,7 @@ export default function OrangeToWhiteTransition() {
           </motion.div>
 
           {/* Separator line that grows and stays */}
-          <motion.div 
+          <motion.div
             className="mt-8 flex justify-center"
             style={{
               opacity: useTransform(scrollYProgress, [0.5, 0.7, 1], [0, 1, 1])
@@ -117,11 +117,11 @@ export default function OrangeToWhiteTransition() {
                 width: useTransform(scrollYProgress, [0.5, 0.8, 1], ['0%', '80%', '80%']),
                 backgroundColor: useTransform(
                   scrollYProgress,
-                  [0, 0.4, 0.7, 1],
+                  [0, 0.1, 0.2, 1],
                   [
                     'rgb(255, 255, 255)', // White line on orange
-                    'rgb(255, 255, 255)', // Stay white
-                    'rgb(31, 41, 55)',    // Transition to black
+                    'rgb(255, 255, 255)', // Stay white very briefly
+                    'rgb(31, 41, 55)',    // Ultra quick transition to black
                     'rgb(31, 41, 55)'     // Stay black
                   ]
                 ),
@@ -137,7 +137,7 @@ export default function OrangeToWhiteTransition() {
         style={{
           background: useTransform(
             scrollYProgress,
-            [0, 0.4, 0.7, 1],
+            [0, 0.1, 0.2, 1],
             [
               'radial-gradient(circle at center, rgba(255,93,5,0) 0%, rgba(255,93,5,0) 100%)',
               'radial-gradient(circle at center, rgba(255,93,5,0) 0%, rgba(255,93,5,0) 100%)',

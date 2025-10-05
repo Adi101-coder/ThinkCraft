@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useGSAP } from '@/hooks/use-gsap';
 
-const textContent = "At Think Craft Lab, we are fueled by a passion for innovation and a commitment to excellence in 2D and 3D designing, design consulting, and advanced 3D printing solutions. With a team of seasoned design engineers having approximately eight years of expertise in designing, six years in consulting, and three years specialization in 3D printing technologies, we bring a wealth of experience and cutting-edge knowledge to every project we undertake. We transform ideas into reality, ensuring innovation, precision, and reliability in every creation we deliver. Our comprehensive approach combines technical expertise with creative vision to exceed client expectations and deliver solutions that drive business success.";
+const textContent = "At Think Craft Lab,\u00A0we are fueled by a passion for innovation and excellence in 2D and 3D design,\u00A0consulting,\u00A0and advanced 3D printing solutions. With eight years of design expertise and cutting-edge knowledge,\u00A0we transform bold ideas into tangible reality with precision and reliability. Our comprehensive approach combines technical mastery with creative vision,\u00A0delivering solutions that drive business success and exceed expectations in every project we undertake.";
 
 export default function TextReveal() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -33,7 +33,7 @@ export default function TextReveal() {
       start: "top 70%",
       end: "bottom 30%",
       scrub: 1,
-      onUpdate: (self) => {
+      onUpdate: (self: any) => {
         const progress = self.progress;
         const totalChars = allChars.length;
         const charsToHighlight = Math.floor(progress * totalChars);
@@ -79,7 +79,7 @@ export default function TextReveal() {
       }}
     >
       <div className="max-w-7xl mx-auto px-8">
-        <div className="text-2xl md:text-4xl lg:text-5xl leading-loose font-bold" data-testid="reveal-text" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif', fontWeight: '700', lineHeight: '1.8' }}>
+        <div className="text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bold" data-testid="reveal-text" style={{ fontFamily: 'Inter, Helvetica Neue, Helvetica, Arial, sans-serif', fontWeight: '400', letterSpacing: '-0.02em', lineHeight: '1.3', wordBreak: 'keep-all', hyphens: 'none', overflowWrap: 'break-word' }}>
           <p className="text-reveal-paragraph" data-testid="text-paragraph">
             {splitTextIntoChars(textContent).map((charObj, charIndex) => (
               <span
