@@ -346,28 +346,19 @@ export default function TextToIndustryTransition() {
         backgroundColor,
         color: textColor,
       }}
-      className="relative transition-all duration-700 ease-in-out py-20"
+      className="relative transition-all duration-700 ease-in-out py-0"
       data-testid="text-to-industry-transition"
     >
-      {/* Smooth gradient overlay for enhanced blending */}
+      {/* Seamless blending overlay - no visible gradients */}
       <motion.div
         className="absolute inset-0 pointer-events-none z-0"
         style={{
-          background: useTransform(
-            scrollYProgress,
-            [0, 0.3, 0.7, 1],
-            [
-              'linear-gradient(to bottom, transparent 0%, transparent 100%)',
-              'linear-gradient(to bottom, rgba(255,93,5,0.8) 0%, rgba(255,93,5,0.4) 50%, rgba(255,255,255,0.2) 100%)',
-              'linear-gradient(to bottom, rgba(255,93,5,0.2) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0.8) 100%)',
-              'linear-gradient(to bottom, transparent 0%, transparent 100%)'
-            ]
-          )
+          background: 'transparent'
         }}
       />
       
       {/* Industry Selection Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-20">
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="section-title text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
@@ -379,13 +370,8 @@ export default function TextToIndustryTransition() {
         </div>
 
         {/* Industry Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 relative">
-          {/* Enhanced Vertical dividers with gradient */}
-          <div className="divider-line hidden lg:block absolute left-1/3 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-gray-300 to-transparent transform -translate-x-1/2"></div>
-          <div className="divider-line hidden lg:block absolute right-1/3 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-gray-300 to-transparent transform translate-x-1/2"></div>
-          
-          {/* Background decoration */}
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 via-transparent to-orange-50/30 rounded-3xl -z-10"></div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 relative pb-20">
+          {/* No dividers or background decorations for seamless look */}
 
           {industries.map((industry, index) => (
             <div
@@ -393,10 +379,12 @@ export default function TextToIndustryTransition() {
               ref={(el) => {
                 if (el) cardsRef.current[index] = el;
               }}
-              className="industry-card bg-white rounded-3xl p-8 cursor-pointer transition-all duration-500 relative overflow-hidden"
+              className="industry-card rounded-3xl p-8 cursor-pointer transition-all duration-500 relative overflow-hidden"
               style={{
-                boxShadow: "0 8px 25px rgba(0, 0, 0, 0.1)",
-                background: "linear-gradient(135deg, #ffffff 0%, #fafbfc 100%)"
+                boxShadow: "0 4px 15px rgba(0, 0, 0, 0.05)",
+                background: "rgba(255, 255, 255, 0.95)",
+                backdropFilter: "blur(10px)",
+                border: "1px solid rgba(255, 255, 255, 0.2)"
               }}
               onMouseEnter={() => handleCardHover(index, true)}
               onMouseLeave={() => handleCardHover(index, false)}

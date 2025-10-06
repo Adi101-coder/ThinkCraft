@@ -1,152 +1,195 @@
 import React, { useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 /**
  * OrangeToWhiteTransition Component
- * Creates seamless theme transition from orange TextReveal to white ThreeStepsProcess
- * Transitions from orange (#FF5D05) to white background with text color changes
+ * Creates seamless theme transition from orange TextReveal to white background
+ * Uses GSAP ScrollTrigger for perfect color interpolation and smooth blending
  */
 export default function OrangeToWhiteTransition() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  });
-
-  // Ultra fast transition - instant color change
-  const backgroundColor = useTransform(
-    scrollYProgress,
-    [0, 0.1, 0.2, 1],
-    [
-      '#FF5D05',           // Orange start
-      '#FF5D05',           // Hold orange very briefly (10%)
-      '#ffffff',           // Ultra quick transition to white (20%)
-      '#ffffff'            // White locked
-    ]
-  );
-
-  const textColor = useTransform(
-    scrollYProgress,
-    [0, 0.1, 0.2, 1],
-    [
-      'rgb(255, 255, 255)', // White text start
-      'rgb(255, 255, 255)', // Hold white very briefly (10%)
-      'rgb(31, 41, 55)',    // Ultra quick transition to dark (20%)
-      'rgb(31, 41, 55)'     // Dark locked
-    ]
-  );
-
-  // Update CSS variables for theme synchronization
-  useEffect(() => {
-    const unsubscribe = backgroundColor.onChange((latest) => {
-      document.documentElement.style.setProperty('--transition-bg', latest);
-    });
-    return unsubscribe;
-  }, [backgroundColor]);
 
   useEffect(() => {
-    const unsubscribe = textColor.onChange((latest) => {
-      document.documentElement.style.setProperty('--transition-text', latest);
-    });
-    return unsubscribe;
-  }, [textColor]);
+    console.log('🎨 OrangeToWhiteTransition: Component mounted');
+
+    // Initialize body with orange background
+    document.body.style.backgroundColor = '#FF5D05';
+    document.body.style.color = 'white';
+
+    const initTransition = () => {
+      const container = containerRef.current;
+      const textRevealSection = document.querySelector('#text-reveal');
+
+      if (!container || !textRevealSection) {
+        console.warn('⚠️ Container or TextReveal section not found, retrying...');
+        return null;
+      }
+
+      console.log('✅ Container and TextReveal section found');
+
+      // Create seamless color transition triggered when highlight reaches "that drive business success and"
+      const scrollTrigger = ScrollTrigger.create({
+        trigger: textRevealSection,
+        start: 'top+=90% bottom',       // Start when highlight reaches ~90% through text ("that drive business success and")
+        end: 'bottom top',              // Complete when text-reveal exits viewport
+        scrub: 0.05,                    // Fast scrubbing for immediate response
+        invalidateOnRefresh: true,
+        onUpdate: (self) => {
+          const progress = self.progress;
+
+          // Only log significant progress changes
+          if (progress === 0 || progress === 1 || Math.abs(progress - 0.5) < 0.01) {
+            console.log(`🔄 Orange→White Progress: ${(progress * 100).toFixed(1)}%`);
+          }
+
+          // Start transition immediately when trigger point is reached
+          const clampedProgress = Math.max(0, Math.min(1, progress));
+
+          // Perfect color interpolation from orange to white
+          const backgroundColor = gsap.utils.interpolate(
+            '#FF5D05',        // Orange start
+            '#ffffff',        // White end
+            clampedProgress
+          );
+
+          const textColor = gsap.utils.interpolate(
+            'rgb(255, 255, 255)', // White text on orange
+            'rgb(31, 41, 55)',    // Dark text on white
+            clampedProgress
+          );
+
+          // Apply colors with GPU acceleration
+          gsap.set(document.body, {
+            backgroundColor: backgroundColor,
+            color: textColor,
+            force3D: true
+          });
+
+          // Apply to container as well
+          gsap.set(container, {
+            backgroundColor: backgroundColor,
+            color: textColor,
+            force3D: true
+          });
+
+          // Update CSS variables for theme synchronization
+          document.documentElement.style.setProperty('--transition-bg', backgroundColor);
+          document.documentElement.style.setProperty('--transition-text', textColor);
+          document.documentElement.style.setProperty('--orange-white-progress', clampedProgress.toString());
+        },
+        onEnter: () => console.log('🚀 Orange→White transition started - highlight reached "that drive business success and"'),
+        onLeave: () => console.log('✨ Orange→White transition completed - White theme active'),
+        onEnterBack: () => console.log('🔄 Reversing Orange→White transition'),
+        onLeaveBack: () => console.log('🔙 Back to orange theme - before "that drive business success and"')
+      });
+
+      console.log('✅ Orange→White ScrollTrigger created successfully');
+      return scrollTrigger;
+    };
+
+    // Initialize with retry mechanism
+    let retryCount = 0;
+    const maxRetries = 5;
+
+    const tryInit = () => {
+      const trigger = initTransition();
+
+      if (!trigger && retryCount < maxRetries) {
+        retryCount++;
+        console.log(`🔄 Retry ${retryCount}/${maxRetries} in 500ms...`);
+        setTimeout(tryInit, 500);
+      } else if (trigger) {
+        console.log('🎉 Orange→White transition initialized successfully!');
+        (window as any).__orangeWhiteTransitionTrigger = trigger;
+      } else {
+        console.error('❌ Failed to initialize Orange→White transition after all retries');
+      }
+    };
+
+    const timer = setTimeout(tryInit, 300);
+
+    // Cleanup function
+    return () => {
+      clearTimeout(timer);
+      console.log('🧹 Cleaning up OrangeToWhiteTransition');
+
+      if ((window as any).__orangeWhiteTransitionTrigger) {
+        (window as any).__orangeWhiteTransitionTrigger.kill();
+        delete (window as any).__orangeWhiteTransitionTrigger;
+      }
+
+      // Reset styles
+      document.body.style.backgroundColor = '';
+      document.body.style.color = '';
+
+      if (containerRef.current) {
+        containerRef.current.style.backgroundColor = '';
+        containerRef.current.style.color = '';
+      }
+
+      document.documentElement.style.removeProperty('--transition-bg');
+      document.documentElement.style.removeProperty('--transition-text');
+      document.documentElement.style.removeProperty('--orange-white-progress');
+
+      console.log('✅ Orange→White cleanup completed');
+    };
+  }, []);
 
   return (
-    <motion.div
+    <div
       ref={containerRef}
+      className="h-screen flex items-center justify-center overflow-hidden relative"
       style={{
-        backgroundColor,
-        color: textColor,
+        backgroundColor: 'transparent', // Let the body background show through
+        color: 'inherit' // Inherit text color from body
       }}
-      className="h-screen flex items-center justify-center overflow-hidden"
     >
       {/* Transition content with words */}
-      <div className="max-w-7xl mx-auto px-4 w-full">
+      <div className="max-w-7xl mx-auto px-4 w-full z-10 relative">
         <div className="text-center">
-          {/* Main words display - visible from start, follows color transition */}
-          <motion.div
-            className="space-y-4"
-            style={{
-              opacity: 1
-            }}
-          >
+          {/* Main words display with subtle animations */}
+          <div className="space-y-4">
             {['CREATIVE', 'BOLD', 'DYNAMIC'].map((word, index) => (
-              <motion.h2
+              <div
                 key={word}
-                className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-wider"
+                className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-wider transition-all duration-1000"
                 style={{
-                  // Color follows the exact same transition as textColor
-                  color: useTransform(
-                    scrollYProgress,
-                    [0, 0.1, 0.2, 1],
-                    [
-                      'rgb(255, 255, 255)', // White on orange background
-                      'rgb(255, 255, 255)', // Stay white very briefly
-                      'rgb(31, 41, 55)',    // Ultra quick transition to black
-                      'rgb(31, 41, 55)'     // Stay black on white background
-                    ]
-                  ),
-                  y: 0,
-                  scale: 1,
-                }}
-                animate={{
-                  opacity: [0.8, 1, 0.8],
-                }}
-                transition={{
-                  duration: 3 + index * 0.5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: index * 0.1
+                  animationDelay: `${index * 0.1}s`,
+                  opacity: 0.9,
+                  transform: 'translateY(0)',
+                  color: 'inherit' // Inherit from body
                 }}
               >
                 {word}
-              </motion.h2>
+              </div>
             ))}
-          </motion.div>
+          </div>
 
-          {/* Separator line that grows and stays */}
-          <motion.div
-            className="mt-8 flex justify-center"
-            style={{
-              opacity: useTransform(scrollYProgress, [0.5, 0.7, 1], [0, 1, 1])
-            }}
-          >
-            <motion.div
-              className="h-0.5"
+          {/* Separator line */}
+          <div className="mt-8 flex justify-center">
+            <div
+              className="h-0.5 transition-all duration-1000"
               style={{
-                width: useTransform(scrollYProgress, [0.5, 0.8, 1], ['0%', '80%', '80%']),
-                backgroundColor: useTransform(
-                  scrollYProgress,
-                  [0, 0.1, 0.2, 1],
-                  [
-                    'rgb(255, 255, 255)', // White line on orange
-                    'rgb(255, 255, 255)', // Stay white very briefly
-                    'rgb(31, 41, 55)',    // Ultra quick transition to black
-                    'rgb(31, 41, 55)'     // Stay black
-                  ]
-                ),
+                width: '60%',
+                opacity: 0.8,
+                backgroundColor: 'currentColor' // Use current text color
               }}
             />
-          </motion.div>
+          </div>
         </div>
       </div>
 
-      {/* Respectful gradient overlay - activates after TextReveal exits */}
-      <motion.div
+      {/* Subtle gradient overlay for depth */}
+      <div
         className="absolute inset-0 pointer-events-none z-0"
         style={{
-          background: useTransform(
-            scrollYProgress,
-            [0, 0.1, 0.2, 1],
-            [
-              'radial-gradient(circle at center, rgba(255,93,5,0) 0%, rgba(255,93,5,0) 100%)',
-              'radial-gradient(circle at center, rgba(255,93,5,0) 0%, rgba(255,93,5,0) 100%)',
-              'radial-gradient(circle at center, rgba(255,120,60,0.1) 0%, rgba(255,255,255,0.05) 100%)',
-              'radial-gradient(circle at center, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 100%)'
-            ]
-          )
+          background: 'radial-gradient(circle at center, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.1) 100%)',
+          opacity: 0.2
         }}
       />
-    </motion.div>
+    </div>
   );
 }

@@ -15,7 +15,7 @@ export default function AnimatedMarquee() {
           ref={marqueeRef}
           className="marquee-content flex whitespace-nowrap"
           style={{
-            animation: 'marqueeScroll 300s linear infinite',
+            animation: 'marqueeScroll 240s linear infinite',
             width: 'max-content'
           }}
         >
@@ -45,7 +45,7 @@ export default function AnimatedMarquee() {
           ref={angledMarqueeRef}
           className="angled-marquee-content flex whitespace-nowrap"
           style={{
-            animation: 'angledMarqueeScroll 350s linear infinite',
+            animation: 'angledMarqueeScroll 280s linear infinite',
             width: 'max-content',
             transform: 'rotate(45deg)',
             transformOrigin: 'center center'

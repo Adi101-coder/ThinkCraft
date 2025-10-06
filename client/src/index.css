@@ -593,4 +593,50 @@ quee Animations */
   -ms-hyphens: none;
   overflow-wrap: break-word;
   word-wrap: break-word;
+}/* 
+Word wrapping rules for text reveal section */
+.text-reveal-paragraph {
+  word-break: keep-all !important;
+  overflow-wrap: normal !important;
+  hyphens: none !important;
+  white-space: pre-wrap !important;
+}
+
+.text-reveal-paragraph .char {
+  word-break: keep-all !important;
+  white-space: pre-wrap !important;
+}
+
+/* Ensure words stay together and wrap to next line when needed */
+.prevent-word-break {
+  word-break: keep-all;
+  overflow-wrap: normal;
+  hyphens: none;
+  white-space: pre-wrap;
+}/* Word
+ wrapping rules for text reveal section */
+.text-reveal-paragraph {
+  word-break: keep-all !important;
+  overflow-wrap: normal !important;
+  hyphens: none !important;
+  white-space: normal !important;
+}
+
+.text-reveal-paragraph .word-container {
+  white-space: nowrap !important;
+  display: inline-block !important;
+  word-break: keep-all !important;
+}
+
+.text-reveal-paragraph .char {
+  word-break: keep-all !important;
+  display: inline-block !important;
+}
+
+/* Ensure words stay together and wrap to next line when needed */
+.prevent-word-break {
+  word-break: keep-all;
+  overflow-wrap: normal;
+  hyphens: none;
+  white-space: normal;
 }
